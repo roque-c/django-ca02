@@ -1,0 +1,80 @@
+<!DOCTYPE html> 
+
+<html> 
+
+<head> 
+
+    <title>Add Book</title> 
+    <style>
+    html, body {
+    height: 100%; /* Ensures full height for centering */
+    margin: 0;    /* Resets default margins */
+    }
+
+    body {
+    display: flex;
+    flex-direction: column;
+    }
+    h2{
+        text-align: center;
+    }
+    form {
+    display: flex;
+    flex-direction: column;  /* Stacks the button below inputs */
+    flex: 1;                 /* Allows form to take available space */
+    }
+
+    .inputs_container{
+    display: flex;            /* Makes inputs align horizontally */
+    flex-direction: row;
+    justify-content: center;  /* Centers input fields horizontally */
+    align-items: center;      /* Centers input fields vertically */
+    margin-bottom: 20px;      /* Adds space below the inputs */
+    color:darkseagreen;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    
+    }
+    .inputs_container p {
+    margin-right: 10px;     /* Adds spacing to the right of each input */
+    display: flex;           /* Makes each <p> a flex container */
+    align-items: center;     /* Centers label and input vertically */
+}
+
+    .inputs_container input {
+    margin-left: 5px;       /* Adds space between label and input */
+}
+    button {
+    align-self: center;    /* Centers the button horizontally */
+    margin: 20px 0;       /* Adds space above and below the button */
+    } 
+    </style>
+    
+    
+</head> 
+
+<body> 
+
+  
+
+    <h2>Add a Book</h2> 
+
+  
+
+    <form method="post"> 
+
+        {% csrf_token %} 
+
+<!-- {{ form.as_p }} renders the entire form automatically.  -->
+        <div class="inputs_container">
+        {{ form.as_p }} 
+        </div>
+
+        <button type="submit">Save</button> 
+
+    </form> 
+
+  
+
+</body> 
+
+</html> 
