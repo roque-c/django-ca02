@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add a Book</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 40px auto;
+            background: #f4f4f4;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        form {
+            background: white;
+            padding: 24px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        label {
+            display: block;
+            margin-top: 14px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px 10px;
+            margin-top: 4px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        /* ✅ STUDENT TASK: Style for error inputs */
+        input.error-field {
+            border-color: #e74c3c;
+            background-color: #fff5f5;
+        }
+
+        /* ✅ STUDENT TASK: Style for error messages */
+        .errorlist {
+            color: #e74c3c;
+            font-size: 13px;
+            margin: 4px 0 0 0;
+            padding-left: 18px;
+        }
+
+        .errorlist li {
+            margin: 2px 0;
+        }
+
+        /* Non-field errors (whole form) */
+        .non-field-errors {
+            background: #fdecea;
+            border: 1px solid #e74c3c;
+            color: #c0392b;
+            padding: 10px 14px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        button[type="submit"] {
+            margin-top: 20px;
+            width: 100%;
+            padding: 10px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #2980b9;
+        }
+
+        .success-message {
+            background: #eafaf1;
+            border: 1px solid #2ecc71;
+            color: #1e8449;
+            padding: 10px 14px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+<body>
+    <h2>📚 Add a New Book</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {# ✅ Display non-field errors (whole-form errors) #}
+        {% if form.non_field_errors %}
+            <div class="non-field-errors">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        {# ✅ Loop through each field and display label, input, and errors #}
+        {% for field in form %}
+            <label for="{{ field.id_for_label }}">
+                {{ field.label }}
+                {% if field.field.required %}<span style="color:red;">*</span>{% endif %}
+            </label>
+
+            {# Add error-field class if this field has errors #}
+            {% if field.errors %}
+                {{ field|add_css_class:"error-field" }}
+            {% else %}
+                {{ field }}
+            {% endif %}
+
+            {# ✅ Show the validation error messages below each field #}
+            {% if field.errors %}
+                <ul class="errorlist">
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endfor %}
+
+        <button type="submit">Add Book</button>
+    </form>
+</body>
+</html>
