@@ -117,7 +117,9 @@
 
             {# Add error-field class if this field has errors #}
             {% if field.errors %}
-                {{ field|add_css_class:"error-field" }}
+
+        {% load widget_tweaks %}
+{% render_field field class="error-field" %}
             {% else %}
                 {{ field }}
             {% endif %}
